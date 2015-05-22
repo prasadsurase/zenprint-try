@@ -11,7 +11,7 @@ password = 'FTP_USER_PASSWORD'
 
 test_url = 'http://orderapi.zenprint.com/orderapisand/?WSDL'
 credentials = {partnerCode: partner_code, apiKey: api_key}
-order_lines = {}
+order_lines = Hash.new { |h,k| h[k] = [] }
 
 shipping_address = {
   name: 'Prasad Surase',
@@ -33,8 +33,10 @@ shipping_info = {
 }
 
 file = {
-  FileFormat: 'PDF',
-  FileName: '12345.pdf'
+  Files: {
+    FileFormat: 'PDF',
+      FileName: '12345.pdf'
+  }
 }
 
 line_item = {
@@ -42,15 +44,15 @@ line_item = {
   productId: 27,
   projectId: '',
   quantity: 1,
-  files:  [file],
+  files: file,
   shippingData:  shipping_info
 }
-order_lines = [order_lines, line_item].reduce :merge
+order_lines['LineItem'] << line_item
 
 order = {
   creds: credentials,
   partnerOrderId: '12345',
-  orderLineItems: [order_lines],
+  orderLineItems: order_lines,
   rushOrder: 0,
   orderDate: Date.today,
   errors: ''
