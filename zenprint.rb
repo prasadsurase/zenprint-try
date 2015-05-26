@@ -33,17 +33,27 @@ shipping_info = {
   'returnAddress' => ''
 }
 
-file = {
-  'Files' => {
-      'FileFormat' => 'PDF',
-      'FileName' => '12345.pdf'
-    }
-  }
+file = Hash.new { |h,k| h[k] = [] }
+
+guts = {
+  'FileFormat' => 'PDF',
+  'FileName' => '12345-GUTS.pdf'
+}
+
+file['Files'] << guts
+
+cover = {
+  'FileFormat' => 'PDF',
+  'FileName' => '12345-COVER.pdf'
+}
+
+file['Files']<< cover
 
 line_item = {
   'lineItemId' => 1,
-  'productId' => '0',
-  'projectId' => '',
+  'productId' => 525,
+  'projectId' => 0,
+  'productType' => 'PARTNER',
   'quantity' => 1,
   'files' => file,
   'shippingData' =>  shipping_info
